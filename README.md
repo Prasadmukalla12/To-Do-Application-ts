@@ -4,6 +4,10 @@ Run the command for start the server : npm run api
 
 Run the command for start the application : npm run dev
 
+Click the localhost path (https://localhost:5173/)
+
+where you can use the application
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

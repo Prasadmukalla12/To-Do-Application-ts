@@ -166,8 +166,7 @@ app.use((req,res)=>{
     res.end()
 })
 
-const PORT = process.env.PORT || 4000;
+// const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on ${PORT}`);
-});
+app.listen(4000);
+console.log("App start : http://localhost:4000")
