@@ -2,8 +2,9 @@ const mongoClient = require("mongodb").MongoClient
 const express = require("express")
 const cors = require("cors")
 
+const mongodb = "mongodb://127.0.0.1:27017"
 
-const mongodb = process.env.MONGO_URL
+//  const mongodb = process.env.MONGO_URL
 
 const app = express()
 app.use(cors())

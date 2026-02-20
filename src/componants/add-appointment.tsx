@@ -29,7 +29,7 @@ export function AddAppointment(){
                 date:details.date,
                 user_id:cookie["user_id"]
             }
-             axios.post(`http://localhost:4000/add-appointment`,appointment)
+             axios.post(`http://127.0.0.1:4000/add-appointment`,appointment)
              .then(()=>{
                 alert("Appointment added")
                 navigate("/user-dashboard")

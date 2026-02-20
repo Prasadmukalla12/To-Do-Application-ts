@@ -18,7 +18,7 @@ export function ToDoHome(){
             password:""
         },
         onSubmit:(user:UserContract)=>{
-            axios.get("http://localhost:4000/users")
+            axios.get("http://127.0.0.1:4000/users")
             .then(res=>{
                 var result = res.data.find((item:UserContract)=>item.user_id===user.user_id)
                 if(result){

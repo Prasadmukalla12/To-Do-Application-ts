@@ -19,7 +19,7 @@ export function UserRegister(){
         },
         onSubmit:(user:UserContract)=>{
            
-            axios.post("http://localhost:4000/add-user",user)
+            axios.post("http://127.0.0.1:4000/add-user",user)
             .then(()=>{
                alert("user added")
                navigate("/")

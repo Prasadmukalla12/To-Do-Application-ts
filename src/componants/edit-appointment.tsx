@@ -15,7 +15,7 @@ export function EditAppointment(){
     const [appointment,setAppointment] = useState<AppointmentContract>()
 
     function LoadAppointment(){
-        axios.get(`http://localhost:4000/appointment/${params.id}`)
+        axios.get(`http://127.0.0.1:4000/appointment/${params.id}`)
         .then(res=>{
             setAppointment(res.data)
         })

@@ -41,7 +41,7 @@ import { addToArchive,addToUnarchive } from "../slicers/slicer"
   function handleDeleteClick(id:number){
          var result = confirm("Are you sure to delete?")
          if(result===true){
-           axios.delete(`http://localhost:4000/delete-appointment/${id}`)
+           axios.delete(`http://127.0.0.1:4000/delete-appointment/${id}`)
            .then(()=>{
               alert("Appointment deleted")
               navigate("/user-dashboard")
@@ -53,7 +53,7 @@ import { addToArchive,addToUnarchive } from "../slicers/slicer"
   }
 
   function LoadDetails(){
-    axios.get(`http://localhost:4000/appointments/${cookie["user_id"]}`)
+    axios.get(`http://127.0.0.1:4000/appointments/${cookie["user_id"]}`)
     .then(res=>{
       setDetails(res.data)
     })
