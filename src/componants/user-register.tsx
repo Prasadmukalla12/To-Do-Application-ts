@@ -34,8 +34,9 @@ export function UserRegister(){
     })
 
     return(
-        <div className="d-flex justify-content-center align-items-center container-fluid" style={{height:"500px"}}>
-          <form onSubmit={formik.handleSubmit} className="w-25 p-2 text-white user-bg border border-2 rounded">
+        <div className="d-flex justify-content-center align-items-center container-fluid" style={{height:"400px"}}>
+          <div>
+            <form onSubmit={formik.handleSubmit} className="p-2 text-white user-bg border border-2 rounded">
             <div>
                 <label className="fw-bold my-2">User ID</label>
                 <div>
@@ -79,6 +80,7 @@ export function UserRegister(){
                 <Link to="/"><label className="fw-bold">Existing user</label></Link>
             </div>
           </form>
+          </div>
         </div>
     )
 }

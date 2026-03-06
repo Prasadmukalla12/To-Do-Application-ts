@@ -22,7 +22,7 @@ export function ToDoHome(){
             .then(res=>{
                 var result = res.data.find((item:UserContract)=>item.user_id===user.user_id)
                 if(result){
-                   setCookie("user_id",user.user_id,{expires:new Date("2025-12-26")})
+                   setCookie("user_id",user.user_id,{expires:new Date("2027-12-26")})
                    if(user.password===result.password){
                       navigate("/user-dashboard")
                    }else{
@@ -42,7 +42,8 @@ export function ToDoHome(){
 
     return(
         <div className="d-flex justify-content-center align-items-center container-fluid" style={{height:"400px"}}>
-            <form onSubmit={formik.handleSubmit} className="w-25 p-2 border border-2 rounded text-white user-bg">
+            <div>
+                <form onSubmit={formik.handleSubmit} className="p-2 border border-2 rounded text-white user-bg">
                 <div>
                     <label className="fw-bold my-2">User ID</label>
                     <div>
@@ -68,6 +69,7 @@ export function ToDoHome(){
                     <Link to="/user-register"><label className="fw-bold text-primary">New user</label></Link>
                 </div>
             </form>
+            </div>
         </div>
     )
 }

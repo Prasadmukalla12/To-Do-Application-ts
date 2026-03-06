@@ -20,11 +20,11 @@ export default function App() {
   return (
     <>
      <BrowserRouter>
-        <header className="p-3 d-flex justify-content-between align-items-center border border-2 bg position-sticky top-0">
+        <header className=" col-12 p-3 d-flex justify-content-between align-items-center border border-2 bg position-sticky top-0">
           <div><h3 className="text-white">To-Do Application</h3></div>
           <div><button onClick={handleRemoveClick} className="bi bi-house btn btn-primary"></button></div>
         </header>
-        <section className="bg p-1 mt-1" style={{height:"100vh"}}>
+        <section className=" bg p-1 mt-1" style={{height:"600px"}}>
           <Routes>
              <Route path="/" element={<ToDoHome/>} />
              <Route path="user-register" element={<UserRegister/>} />

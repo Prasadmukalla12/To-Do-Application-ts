@@ -54,7 +54,8 @@ export function EditAppointment(){
     return(
         <>
           <div className="container-fluid d-flex justify-content-center align-items-center" style={{height:"500px"}}>
-            <form onSubmit={formik.handleSubmit} className="w-25 p-2 border border-2 rounded user-bg text-white user-bg">
+            <div>
+                <form onSubmit={formik.handleSubmit} className="p-2 border border-2 rounded user-bg text-white user-bg">
             <div>
                 <label className="fw-bold my-2">Appointment ID</label>
             <div>
@@ -107,6 +108,7 @@ export function EditAppointment(){
                 <span className="mx-4"><Link to="/user-dashboard" className="btn btn-warning">Cancel</Link></span>
             </div>
         </form>
+            </div>
           </div>
         </>
     )

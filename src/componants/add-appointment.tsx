@@ -13,7 +13,7 @@ export function AddAppointment(){
     const navigate = useNavigate()
     const formik = useFormik({
         initialValues:{
-            appointment_id:0,
+            appointment_id:"",
             title:"",
             description:"",
             date:"",
@@ -37,7 +37,7 @@ export function AddAppointment(){
         },
         enableReinitialize:true,
         validationSchema : yup.object({
-            appointment_id:yup.number().required("ID required"),
+            appointment_id:yup.number().required("ID required").typeError("Id must be a number"),
             title:yup.string().required("Title required"),
             description:yup.string().required("Description required"),
             date:yup.string().required("Date required"),
@@ -48,7 +48,8 @@ export function AddAppointment(){
     return(
     <>
     <div className="container-fluid d-flex justify-content-center align-items-center" style={{height:"500px"}}>
-        <form onSubmit={formik.handleSubmit} className="w-25 p-2 border border-2 rounded user-bg text-white">
+        <div>
+            <form onSubmit={formik.handleSubmit} className="p-2 border border-2 rounded user-bg text-white">
             <div>
                 <label className="fw-bold my-2">Appointment ID</label>
             <div>
@@ -101,6 +102,7 @@ export function AddAppointment(){
                 <span className="mx-4"><Link to="/user-dashboard" className="btn btn-warning"><label className="fw-bold">Cancel</label></Link></span>
             </div>
         </form>
+        </div>
     </div>
     </>
     )

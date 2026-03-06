@@ -66,9 +66,9 @@ import { addToArchive,addToUnarchive } from "../slicers/slicer"
   },[cookie])
 
     return(
-        <>
-          <div className="d-flex justify-content-between align-items-center p-3 border border-2 container-fluid">
-            <div className="d-flex align-items-center"><span className="text-white fw-bold fs-3">{cookie["user_id"]} - Dashboard</span><span><button onClick={handleAddClick} className="btn btn-primary mx-2">Add Appointment</button></span></div>
+        <div>
+          <div className="d-flex flex-wrap justify-content-between align-items-center p-3 border border-2 container-fluid">
+            <div className="mb-3 d-flex align-items-center"><span className="text-white fw-bold fs-3">{cookie["user_id"]} - Dashboard</span><span><button onClick={handleAddClick} className="btn btn-primary mx-2">Add Appointment</button></span></div>
             <div>
               <button className="btn btn-info bi bi-archive position-relative" data-bs-toggle="modal" data-bs-target="#list"><span>Archives</span><span className="badge bg-danger rounded position-absolute">{ArchiveCount}</span></button>
               <div className="modal modal-fullscreen" id="list">
@@ -110,13 +110,15 @@ import { addToArchive,addToUnarchive } from "../slicers/slicer"
             </div>
             <div><button onClick={handleRemoveClick} className="btn btn-danger bi bi-person-dash">Signout</button></div>
           </div>
-          <div className="d-flex container-fluid">
-             {
+          <div className="container-fluid bg-secondary" style={{minHeight:"100vh"}}>
+             <div className="row p-3">
+              {
                details.length<=0 ? (
                 <div><h4 className="text-danger mt-3">No appointments</h4></div>
                ) : (
                 details.map(user=>
-                <div className="card w-25 m-2 p-2" key={user.appointment_id}>
+                <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                  <div className="card h-100" key={user.appointment_id}>
                   <div className="card-header">
                     <h4>{user.title}</h4>
                   </div>
@@ -131,13 +133,15 @@ import { addToArchive,addToUnarchive } from "../slicers/slicer"
                   <div className="card-footer p-2 d-flex justify-content-between align-items-center">
                     <span><Link to={`/edit-appointment/${user.appointment_id}`} className="btn btn-warning bi bi-pen-fill">Edit</Link></span>
                     <span><button className="btn btn-secondary bi bi-archive-fill" onClick={()=>{handleArchiveClick(user)}}>Archive</button></span>
-                    <span><button onClick={()=>{handleDeleteClick(user.appointment_id)}} className="btn btn-danger bi bi-trash-fillz">Delete</button></span>
+                    <span><button onClick={()=>{handleDeleteClick(user.appointment_id)}} className="btn btn-danger bi bi-trash-fill">Delete</button></span>
                   </div>
+                </div>
                 </div>
               )
                )
              }
+             </div>
           </div>
-        </>
+        </div>
     )
  }
