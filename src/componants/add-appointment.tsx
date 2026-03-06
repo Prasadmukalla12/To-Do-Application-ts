@@ -13,7 +13,7 @@ export function AddAppointment(){
     const navigate = useNavigate()
     const formik = useFormik({
         initialValues:{
-            appointment_id:"",
+            appointment_id: 0,
             title:"",
             description:"",
             date:"",
