@@ -3,7 +3,7 @@ import "../styles/login-form.css"
 import { useFormik } from "formik";
 import type { AppointmentContract } from "../contracts/appointment-contract";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import * as yup from "yup"
 
 
@@ -21,7 +21,7 @@ export default function EditAppointment(){
         })
     }
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
         LoadAppointment()
     },[])
 

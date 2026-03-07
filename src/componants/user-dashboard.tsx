@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { Link, useNavigate} from "react-router-dom"
 import type { AppointmentContract } from "../contracts/appointment-contract"
@@ -59,7 +59,7 @@ import { addToArchive,addToUnarchive } from "../slicers/slicer"
     })
   }
 
-  useEffect(()=>{
+  useLayoutEffect(()=>{
     if(cookie["user_id"]){
       LoadDetails()
     }
