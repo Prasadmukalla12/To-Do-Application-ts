@@ -8,7 +8,7 @@ import * as yup from "yup"
 
 
 
-export function EditAppointment(){
+export default function EditAppointment(){
 
     const navigate = useNavigate()
     const params = useParams()

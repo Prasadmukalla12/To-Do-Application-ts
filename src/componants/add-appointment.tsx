@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie"
 import axios from "axios"
 import * as yup from "yup"
 
-export function AddAppointment(){
+export default function AddAppointment(){
 
     const [cookie,,] = useCookies(["user_id"])
 
@@ -54,6 +54,7 @@ export function AddAppointment(){
                 <label className="fw-bold my-2">Appointment ID</label>
             <div>
                 <input onChange={formik.handleChange} value={formik.values.appointment_id} type="number" className="form-control" name="appointment_id" />
+
             </div>
             <div className="text-danger fw-bold">
                 <span>{formik.errors.appointment_id}</span>

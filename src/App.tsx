@@ -1,12 +1,13 @@
 import { BrowserRouter, Route, Routes} from "react-router-dom";
 import "./styles/header.css"
-import { ToDoHome } from "./componants/to-do-home";
-import { UserRegister } from "./componants/user-register";
-import { UserDashboard } from "./componants/user-dashboard";
 import { useCookies } from "react-cookie";
-import { AddAppointment } from "./componants/add-appointment";
-import { EditAppointment } from "./componants/edit-appointment";
+import { lazy, Suspense } from "react";
 
+const ToDoHome = lazy(()=>import ("./componants/to-do-home"))
+const UserRegister = lazy(()=>import ("./componants/user-register"))
+const UserDashboard = lazy(()=>import ("./componants/user-dashboard"))
+const AddAppointment = lazy(()=>import ("./componants/add-appointment"))
+const EditAppointment = lazy(()=>import ("./componants/edit-appointment"))
 
 export default function App() {
   
@@ -25,13 +26,15 @@ export default function App() {
           <div><button onClick={handleRemoveClick} className="bi bi-house btn btn-primary"></button></div>
         </header>
         <section className=" bg p-1 mt-1" style={{height:"600px"}}>
-          <Routes>
+          <Suspense fallback={<h3>Loading...</h3>}>
+            <Routes>
              <Route path="/" element={<ToDoHome/>} />
              <Route path="user-register" element={<UserRegister/>} />
              <Route path="user-dashboard" element={<UserDashboard/>} />
              <Route path="add-appointment" element={<AddAppointment/>} />
              <Route path="edit-appointment/:id" element={<EditAppointment/>} />
           </Routes>
+          </Suspense>
         </section>
      </BrowserRouter>
     </>

@@ -6,7 +6,7 @@ import * as yup from "yup"
 import type { UserContract } from "../contracts/user-contract";
 
 
-export function UserRegister(){
+export default function UserRegister(){
 
     const navigate = useNavigate()
 

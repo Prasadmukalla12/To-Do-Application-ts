@@ -7,7 +7,7 @@ import * as yup from "yup"
 import type { UserContract } from "../contracts/user-contract";
 
 
-export function ToDoHome(){
+export default function ToDoHome(){
 
     const navigate = useNavigate()
     const [,setCookie,] = useCookies(["user_id"])

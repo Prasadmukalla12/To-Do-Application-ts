@@ -8,7 +8,7 @@ import  {useDispatch,useSelector} from "react-redux"
 import { addToArchive,addToUnarchive } from "../slicers/slicer"
 
  
- export function UserDashboard(){
+ export default function UserDashboard(){
 
   const [cookie,,removeCookie] = useCookies(["user_id"])
   const navigate = useNavigate()
@@ -24,14 +24,14 @@ import { addToArchive,addToUnarchive } from "../slicers/slicer"
 
   const dispatch = useDispatch()
 
-  function handleArchiveClick(e:AppointmentContract){
-      dispatch(addToArchive(e))
-      setDetails(preview=>preview.filter(item=>item.appointment_id!==e.appointment_id))
+  function handleArchiveClick(user:AppointmentContract){
+      dispatch(addToArchive(user))
+      setDetails(preview=>preview.filter(item=>item.appointment_id!==user.appointment_id))
   }
 
-  function handleUnArchiveClick(e:AppointmentContract){
-      dispatch(addToUnarchive(e))
-      setDetails(preview => preview.concat(e))
+  function handleUnArchiveClick(user:AppointmentContract){
+      dispatch(addToUnarchive(user))
+      setDetails(preview => preview.concat(user))
   }
 
   function handleAddClick(){
@@ -82,8 +82,8 @@ import { addToArchive,addToUnarchive } from "../slicers/slicer"
                      {
                       ArchiveList<=0 ? (<div> <h3 className="text-center" style={{color:"orange"}}>No Archive items</h3></div>) : (
                         ArchiveList.map((item:AppointmentContract)=>
-                          <div className="d-flex flex-column">
-                            <div className="card p-2 m-2" key={item.appointment_id}>
+                          <div className="d-flex flex-column" key={item.appointment_id}>
+                            <div className="card p-2 m-2">
                             <div className="card-header">
                               <h3>{item.title}</h3>
                             </div>
@@ -117,8 +117,8 @@ import { addToArchive,addToUnarchive } from "../slicers/slicer"
                 <div><h4 className="text-danger mt-3">No appointments</h4></div>
                ) : (
                 details.map(user=>
-                <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
-                  <div className="card h-100" key={user.appointment_id}>
+                <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" key={user.appointment_id}>
+                  <div className="card h-100">
                   <div className="card-header">
                     <h4>{user.title}</h4>
                   </div>
