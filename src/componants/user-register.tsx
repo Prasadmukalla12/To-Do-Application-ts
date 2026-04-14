@@ -4,11 +4,21 @@ import{useFormik} from "formik"
 import axios from "axios"
 import * as yup from "yup"
 import type { UserContract } from "../contracts/user-contract";
+import { useEffect, useState } from "react";
 
 
 export default function UserRegister(){
 
     const navigate = useNavigate()
+    const [ExistUser,setExistUser] = useState([])
+
+    useEffect(()=>{
+        axios.get("http://localhost:4000/users")
+        .then(res=>{
+            console.log(res.data)
+            setExistUser(res.data)
+        })
+    },[])
 
     const formik = useFormik({
         initialValues:{
@@ -18,18 +28,29 @@ export default function UserRegister(){
             email:""
         },
         onSubmit:(user:UserContract)=>{
-           
-            axios.post("http://127.0.0.1:4000/add-user",user)
+            var result = {
+                user_id : user.user_id,
+                user_name:user.user_name,
+                password : user.password,
+                email:user.email
+            }
+
+            var userResult = ExistUser.find((val:any)=>val.user_id===user.user_id)
+             if(!userResult){
+                axios.post("http://127.0.0.1:4000/add-user",result)
             .then(()=>{
                alert("user added")
                navigate("/")
             })
+             }else{
+                alert("user_id Exist")
+             }
         },
         validationSchema:yup.object({
             user_id:yup.string().required("User ID required").min(4,"User ID is Too short").max(15,"User ID not be above 15 characters"),
             user_name:yup.string().required("Username required").min(4,"Username is too short").max(15,"Username not be above 15 characters"),
-            password:yup.string().required("Password required").matches(/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%&*])[A-Za-z0-9@#$%&*]{8,15}/,"Invalid Password match one upper,special,number required"),
-            email:yup.string().required("Email required").matches(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/,"Email some are missing")
+            password:yup.string().required("Password required").matches(/[A-Z]\w{5,12}/,"First Must be upper and should not be before 6 chars"),
+            email:yup.string().required("Email required").matches(/[a-z,A-Z,0-9]+@gmail\.com/,"Email should be Your address@gmail.com")
         })
     })
 

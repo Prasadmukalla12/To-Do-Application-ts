@@ -3,7 +3,7 @@ import "../styles/login-form.css"
 import { useFormik } from "formik";
 import type { AppointmentContract } from "../contracts/appointment-contract";
 import axios from "axios";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as yup from "yup"
 
 
@@ -14,14 +14,14 @@ export default function EditAppointment(){
     const params = useParams()
     const [appointment,setAppointment] = useState<AppointmentContract>()
 
-    function LoadAppointment(){
+    const LoadAppointment = useCallback(()=>{
         axios.get(`http://127.0.0.1:4000/appointment/${params.id}`)
         .then(res=>{
             setAppointment(res.data)
         })
-    }
+    },[params.id])
 
-    useLayoutEffect(()=>{
+    useEffect(()=>{
         LoadAppointment()
     },[])
 

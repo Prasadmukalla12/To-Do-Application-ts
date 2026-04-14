@@ -22,8 +22,8 @@ export default function ToDoHome(){
             .then(res=>{
                 var result = res.data.find((item:UserContract)=>item.user_id===user.user_id)
                 if(result){
-                   setCookie("user_id",user.user_id,{expires:new Date("2027-12-26")})
-                   if(user.password===result.password){
+                   if(user.password.trim()===result.password.trim()){
+                     setCookie("user_id",user.user_id,{expires:new Date("2027-12-26")})
                       navigate("/user-dashboard")
                    }else{
                     alert("Invalid password")

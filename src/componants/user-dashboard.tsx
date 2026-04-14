@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { Link, useNavigate} from "react-router-dom"
 import type { AppointmentContract } from "../contracts/appointment-contract"
@@ -14,32 +14,32 @@ import { addToArchive,addToUnarchive } from "../slicers/slicer"
   const navigate = useNavigate()
   const [details,setDetails] = useState<AppointmentContract[]>([])
 
-  function handleRemoveClick(){
+  const handleRemoveClick = useCallback(()=>{
     removeCookie("user_id")
     navigate("/")
-  }
+  },[])
 
   const ArchiveList = useSelector((state:any)=>state.archives)
   const ArchiveCount = useSelector((state:any)=>state.archiveCount)
 
   const dispatch = useDispatch()
 
-  function handleArchiveClick(user:AppointmentContract){
-      dispatch(addToArchive(user))
+  const handleArchiveClick = useCallback((user:AppointmentContract)=>{
+    dispatch(addToArchive(user))
       setDetails(preview=>preview.filter(item=>item.appointment_id!==user.appointment_id))
-  }
+  },[])
 
-  function handleUnArchiveClick(user:AppointmentContract){
-      dispatch(addToUnarchive(user))
-      setDetails(preview => preview.concat(user))
-  }
+  const handleUnArchiveClick = useCallback((user:AppointmentContract)=>{
+    dispatch(addToUnarchive(user))
+    setDetails(preview => preview.concat(user))
+  },[])
 
-  function handleAddClick(){
+  const handleAddClick = useCallback(()=>{
     navigate("/add-appointment")
-  }
+  },[])
 
-  function handleDeleteClick(id:number){
-         var result = confirm("Are you sure to delete?")
+  const handleDeleteClick = useCallback((id:number)=>{
+       var result = confirm("Are you sure to delete?")
          if(result===true){
            axios.delete(`http://127.0.0.1:4000/delete-appointment/${id}`)
            .then(()=>{
@@ -50,16 +50,16 @@ import { addToArchive,addToUnarchive } from "../slicers/slicer"
          }else{
           navigate("/user-dashboard")
          }
-  }
+  },[])
 
-  function LoadDetails(){
+  const LoadDetails = useCallback(()=>{
     axios.get(`http://127.0.0.1:4000/appointments/${cookie["user_id"]}`)
     .then(res=>{
       setDetails(res.data)
     })
-  }
+  },[])
 
-  useLayoutEffect(()=>{
+  useEffect(()=>{
     if(cookie["user_id"]){
       LoadDetails()
     }
@@ -114,7 +114,7 @@ import { addToArchive,addToUnarchive } from "../slicers/slicer"
              <div className="row p-3">
               {
                details.length<=0 ? (
-                <div><h4 className="text-danger mt-3">No appointments</h4></div>
+                <div><h4 className="text-white mt-3">No appointments</h4></div>
                ) : (
                 details.map(user=>
                 <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" key={user.appointment_id}>
