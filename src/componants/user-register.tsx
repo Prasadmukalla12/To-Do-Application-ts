@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/login-form.css"
 import{useFormik} from "formik"
-import axios from "axios"
+import axios from "../api"
 import * as yup from "yup"
 import type { UserContract } from "../contracts/user-contract";
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ export default function UserRegister(){
     const [ExistUser,setExistUser] = useState([])
 
     useEffect(()=>{
-        axios.get("http://localhost:4000/users")
+        axios.get("/users")
         .then(res=>{
             console.log(res.data)
             setExistUser(res.data)
@@ -37,7 +37,7 @@ export default function UserRegister(){
 
             var userResult = ExistUser.find((val:any)=>val.user_id===user.user_id)
              if(!userResult){
-                axios.post("http://127.0.0.1:4000/add-user",result)
+                axios.post("/add-user",result)
             .then(()=>{
                alert("user added")
                navigate("/")

@@ -1,5 +1,7 @@
 const app = require("./app.cjs")
 
-app.listen(4000, () => {
-    console.log("App start : http://localhost:4000")
+const port = Number(process.env.PORT || 4000)
+
+app.listen(port, () => {
+    console.log(`API listening on port ${port}`)
 })

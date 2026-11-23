@@ -3,7 +3,7 @@ import { createPortal } from "react-dom"
 import { useCookies } from "react-cookie"
 import { Link, useNavigate} from "react-router-dom"
 import type { AppointmentContract } from "../contracts/appointment-contract"
-import axios from "axios"
+import axios from "../api"
 import moment from "moment"
 import  {useDispatch,useSelector} from "react-redux"
 import { addToArchive,addToUnarchive } from "../redux/slicer/slicer"
@@ -43,7 +43,7 @@ import type { RootState } from "../redux/store/store"
   const handleDeleteClick = useCallback((id:number)=>{
        var result = confirm("Are you sure to delete?")
          if(result===true){
-           axios.delete(`http://127.0.0.1:4000/delete-appointment/${id}`)
+           axios.delete(`/delete-appointment/${id}`)
            .then(()=>{
               alert("Appointment deleted")
               navigate("/user-dashboard")
@@ -55,7 +55,7 @@ import type { RootState } from "../redux/store/store"
   },[])
 
   const LoadDetails = useCallback(()=>{
-    axios.get(`http://127.0.0.1:4000/appointments/${cookie["user_id"]}`)
+    axios.get(`/appointments/${cookie["user_id"]}`)
     .then(res=>{
       setDetails(res.data)
     })

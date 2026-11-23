@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import "../styles/login-form.css"
 import { useFormik } from "formik";
 import type { AppointmentContract } from "../contracts/appointment-contract";
-import axios from "axios";
+import axios from "../api";
 import { useCallback, useEffect, useState } from "react";
 import * as yup from "yup"
 
@@ -15,7 +15,7 @@ export default function EditAppointment(){
     const [appointment,setAppointment] = useState<AppointmentContract>()
 
     const LoadAppointment = useCallback(()=>{
-        axios.get(`http://127.0.0.1:4000/appointment/${params.id}`)
+        axios.get(`/appointment/${params.id}`)
         .then(res=>{
             setAppointment(res.data)
         })
@@ -35,7 +35,7 @@ export default function EditAppointment(){
             
         },
         onSubmit:(details:AppointmentContract)=>{
-            axios.put(`http://localhost:4000/update-appointment/${params.id}`,details)
+            axios.put(`/update-appointment/${params.id}`,details)
             .then(()=>{
                 alert("appointment updated")
                 navigate("/user-dashboard")

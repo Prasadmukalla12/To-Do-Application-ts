@@ -3,7 +3,7 @@ import "../styles/login-form.css"
 import { useFormik } from "formik"
 import type { AppointmentContract } from "../contracts/appointment-contract"
 import { useCookies } from "react-cookie"
-import axios from "axios"
+import axios from "../api"
 import * as yup from "yup"
 
 export default function AddAppointment(){
@@ -29,7 +29,7 @@ export default function AddAppointment(){
                 date:details.date,
                 user_id:cookie["user_id"]
             }
-             axios.post(`http://127.0.0.1:4000/add-appointment`,appointment)
+             axios.post(`/add-appointment`,appointment)
              .then(()=>{
                 alert("Appointment added")
                 navigate("/user-dashboard")

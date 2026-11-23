@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/login-form.css"
 import { useFormik } from "formik";
-import axios from "axios";
+import axios from "../api";
 import {useCookies} from "react-cookie"
 import * as yup from "yup"
 import type { UserContract } from "../contracts/user-contract";
@@ -18,7 +18,7 @@ export default function ToDoHome(){
             password:""
         },
         onSubmit:(user:UserContract)=>{
-            axios.get("http://127.0.0.1:4000/users")
+            axios.get("/users")
             .then(res=>{
                 var result = res.data.find((item:UserContract)=>item.user_id===user.user_id)
                 if(result){
