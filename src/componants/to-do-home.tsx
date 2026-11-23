@@ -41,9 +41,10 @@ export default function ToDoHome(){
 
 
     return(
-        <div className="d-flex justify-content-center align-items-center container-fluid" style={{height:"400px"}}>
+        <div className="form-page">
             <div>
-                <form onSubmit={formik.handleSubmit} className="p-2 border border-2 rounded text-white user-bg">
+                <form onSubmit={formik.handleSubmit} className="form-panel">
+                    <h1>Sign in</h1>
                 <div>
                     <label className="fw-bold my-2">User ID</label>
                     <div>

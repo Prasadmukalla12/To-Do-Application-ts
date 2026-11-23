@@ -21,12 +21,15 @@ export default function App() {
   return (
     <>
      <BrowserRouter>
-        <header className=" col-12 p-3 d-flex justify-content-between align-items-center border border-2 bg position-sticky top-0">
-          <div><h3 className="text-white">To-Do Application</h3></div>
-          <div><button onClick={handleRemoveClick} className="bi bi-house btn btn-primary"></button></div>
+        <header className="app-header">
+          <div className="app-brand">
+            <i className="bi bi-check2-square" aria-hidden="true" />
+            <span>To-Do Application</span>
+          </div>
+          <button type="button" onClick={handleRemoveClick} className="bi bi-house btn btn-outline-light" aria-label="Return home" />
         </header>
-        <section className=" bg p-1 mt-1" style={{height:"600px"}}>
-          <Suspense fallback={<h3>Loading...</h3>}>
+        <main className="app-main">
+          <Suspense fallback={<p className="app-loading" role="status">Loading…</p>}>
             <Routes>
              <Route path="/" element={<ToDoHome/>} />
              <Route path="user-register" element={<UserRegister/>} />
@@ -35,7 +38,7 @@ export default function App() {
              <Route path="edit-appointment/:id" element={<EditAppointment/>} />
           </Routes>
           </Suspense>
-        </section>
+        </main>
      </BrowserRouter>
     </>
   )

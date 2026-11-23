@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-import type { AppointmentContract } from "../contracts/appointment-contract"
+import type { AppointmentContract } from "../../contracts/appointment-contract"
 
 interface archive {
     archives:AppointmentContract[],

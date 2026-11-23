@@ -1,4 +1,43 @@
-.user-bg{
-    background-color: rgba(40, 35, 35, 0.4);
-    box-shadow: 5px 8px 15px 5px black;
+.form-page {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    padding-block: 1rem;
+}
+
+.form-panel {
+    width: min(100%, 27rem);
+    padding: clamp(1.25rem, 5vw, 2rem);
+    border: 1px solid rgb(255 255 255 / 75%);
+    border-radius: 1.25rem;
+    background: #f8fafc;
+    color: #16243d;
+    box-shadow: 0 24px 64px rgb(4 12 28 / 35%);
+}
+
+.form-panel h1 {
+    margin: 0 0 .75rem;
+    font-size: clamp(1.4rem, 4vw, 1.85rem);
+    font-weight: 700;
+    letter-spacing: -.035em;
+}
+
+.form-panel.appointment-surface {
+    background: linear-gradient(145deg, #f4fffc, #f8f7ff 75%);
+}
+
+.form-panel .form-control {
+    padding: .65rem .8rem;
+    border-radius: .65rem;
+}
+
+.form-panel .form-control:focus {
+    border-color: #4372cc;
+    box-shadow: 0 0 0 .2rem rgb(67 114 204 / 20%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .form-panel {
+        animation: rise-in 320ms ease-out;
+    }
 }

@@ -47,9 +47,10 @@ export default function AddAppointment(){
 
     return(
     <>
-    <div className="container-fluid d-flex justify-content-center align-items-center" style={{height:"500px"}}>
+    <div className="form-page">
         <div>
-            <form onSubmit={formik.handleSubmit} className="p-2 border border-2 rounded user-bg text-white">
+            <form onSubmit={formik.handleSubmit} className="form-panel appointment-surface">
+                <h1>Add appointment</h1>
             <div>
                 <label className="fw-bold my-2">Appointment ID</label>
             <div>

@@ -1,4 +1,181 @@
-.bg{
-    background-image: url("../../images/bg.jpg");
-    background-size: cover;
+body {
+    background: #0e192c;
+}
+
+#root {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    isolation: isolate;
+}
+
+#root::before {
+    content: "";
+    position: fixed;
+    inset: -12%;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse at 23% 29%, rgb(28 164 149 / 66%), transparent 41%),
+        radial-gradient(ellipse at 76% 72%, rgb(116 84 218 / 68%), transparent 43%),
+        radial-gradient(ellipse at 71% 20%, rgb(35 107 186 / 49%), transparent 39%),
+        linear-gradient(145deg, #11243b, #0e192c 62%, #1b2544);
+}
+
+.app-header {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .85rem clamp(1rem, 4vw, 3rem);
+    color: #f5f8fc;
+    background: rgb(13 24 42 / 92%);
+    border-bottom: 1px solid rgb(255 255 255 / 12%);
+    backdrop-filter: blur(16px);
+}
+
+.app-brand {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+}
+
+.app-brand .bi {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: .75rem;
+    background: #b8f3dd;
+    color: #123b35;
+}
+
+.app-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 90rem);
+    margin-inline: auto;
+    padding: clamp(1rem, 4vw, 3rem);
+}
+
+.app-loading {
+    color: #e6eefc;
+    text-align: center;
+}
+
+.dashboard-toolbar {
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    background: rgb(11 22 40 / 65%);
+    border: 1px solid rgb(255 255 255 / 16%);
+    border-radius: 1rem;
+}
+
+.appointment-surface {
+    position: relative;
+}
+
+.appointment-surface::before {
+    content: "";
+    position: absolute;
+    inset: 0 .85rem auto;
+    height: 4px;
+    border-radius: 0 0 .4rem .4rem;
+    background: repeating-linear-gradient(105deg, #13a597 0%, #467cdd 25%, #915adc 50%, #467cdd 75%, #13a597 100%);
+    background-size: 200% 100%;
+    pointer-events: none;
+}
+
+.card.appointment-surface {
+    border: 1px solid rgb(255 255 255 / 55%);
+    border-radius: 1rem;
+    color: #16243d;
+    background: linear-gradient(145deg, #f4fffc, #f8f7ff 75%);
+    box-shadow: 0 8px 24px rgb(4 12 28 / 20%);
+    overflow-wrap: anywhere;
+}
+
+.card.appointment-surface > :is(.card-header, .card-footer) {
+    background: transparent;
+    border-color: rgb(54 70 114 / 12%);
+}
+
+.card.appointment-surface > .card-header {
+    padding-top: 1rem;
+}
+
+.appointment-grid .card-footer {
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    #root::before {
+        animation: background-drift 22s ease-in-out infinite alternate;
+    }
+
+    .appointment-surface::before {
+        animation: appointment-gradient 8s linear infinite;
+    }
+
+    .appointment-grid .card {
+        animation: rise-in 300ms ease-out;
+        transition: translate 160ms ease, box-shadow 160ms ease;
+    }
+
+    .app-header .btn,
+    .app-main .btn {
+        transition: translate 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
+    }
+}
+
+@keyframes appointment-gradient {
+    to {
+        background-position: 100% 50%;
+    }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .appointment-grid .card:hover {
+        translate: 0 -3px;
+        box-shadow: 0 14px 32px rgb(4 12 28 / 32%);
+    }
+
+    .app-header .btn:hover,
+    .app-main .btn:hover {
+        translate: 0 -2px;
+    }
+}
+
+@keyframes background-drift {
+    0% {
+        transform: translate(-5%, 4%) scale(1);
+    }
+
+    50% {
+        transform: translate(4%, -5%) scale(1.08);
+    }
+
+    100% {
+        transform: translate(7%, 5%) scale(1.02);
+    }
+}
+
+@keyframes rise-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
