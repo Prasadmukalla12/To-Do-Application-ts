@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "start": "node server/index.cjs",
     "api": "node server/index.cjs"
   },
   "dependencies": {
