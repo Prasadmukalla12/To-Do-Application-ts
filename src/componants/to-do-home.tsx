@@ -1,15 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/login-form.css"
 import { useFormik } from "formik";
-import axios from "../api";
+import { isAxiosError } from "axios";
+import api, { saveSession } from "../api";
 import {useCookies} from "react-cookie"
 import * as yup from "yup"
 import type { UserContract } from "../contracts/user-contract";
+import { useState } from "react";
 
 
 export default function ToDoHome(){
 
     const navigate = useNavigate()
+    const [loginError, setLoginError] = useState("")
     const [,setCookie,] = useCookies(["user_id"])
 
     const formik = useFormik({
@@ -17,21 +20,18 @@ export default function ToDoHome(){
             user_id:"",
             password:""
         },
-        onSubmit:(user:UserContract)=>{
-            axios.get("/users")
-            .then(res=>{
-                var result = res.data.find((item:UserContract)=>item.user_id===user.user_id)
-                if(result){
-                   if(user.password.trim()===result.password.trim()){
-                     setCookie("user_id",user.user_id,{expires:new Date("2027-12-26")})
-                      navigate("/user-dashboard")
-                   }else{
-                    alert("Invalid password")
-                   }
-                }else{
-                    alert("User not found")
-                }
-            })
+        onSubmit: async (user: UserContract) => {
+            setLoginError("")
+            try {
+                const { data } = await api.post<{ user_id: string, token: string }>("/login", user)
+                saveSession(data.token)
+                setCookie("user_id", data.user_id, { path: "/", maxAge: 86400, sameSite: "lax" })
+                navigate("/user-dashboard")
+            } catch (error) {
+                setLoginError(isAxiosError(error) && error.response?.status === 401
+                    ? "Invalid user ID or password"
+                    : "Unable to sign in. Please try again.")
+            }
         },
         validationSchema:yup.object({
             user_id:yup.string().required("Username required"),
@@ -64,7 +64,10 @@ export default function ToDoHome(){
                     </div>
                 </div>
                 <div className="mt-3">
-                    <button  type="submit" className="btn btn-primary w-100"><label className="fw-bold">Login</label></button>
+                    {loginError && <p className="text-danger" role="alert">{loginError}</p>}
+                    <button type="submit" className="btn btn-primary w-100" disabled={formik.isSubmitting}>
+                        {formik.isSubmitting ? "Signing in…" : "Login"}
+                    </button>
                 </div>
                 <div className="text-center my-2">
                     <Link to="/user-register"><label className="fw-bold text-primary">New user</label></Link>

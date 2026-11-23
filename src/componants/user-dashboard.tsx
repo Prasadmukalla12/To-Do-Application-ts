@@ -3,7 +3,8 @@ import { createPortal } from "react-dom"
 import { useCookies } from "react-cookie"
 import { Link, useNavigate} from "react-router-dom"
 import type { AppointmentContract } from "../contracts/appointment-contract"
-import axios from "../api"
+import { isAxiosError } from "axios"
+import axios, { endSession } from "../api"
 import moment from "moment"
 import  {useDispatch,useSelector} from "react-redux"
 import { addToArchive,addToUnarchive } from "../redux/slicer/slicer"
@@ -16,10 +17,14 @@ import type { RootState } from "../redux/store/store"
   const navigate = useNavigate()
   const [details,setDetails] = useState<AppointmentContract[]>([])
 
-  const handleRemoveClick = useCallback(()=>{
-    removeCookie("user_id")
-    navigate("/")
-  },[])
+  const handleRemoveClick = useCallback(async () => {
+    try {
+      await endSession()
+    } finally {
+      removeCookie("user_id", { path: "/" })
+      navigate("/")
+    }
+  }, [navigate, removeCookie])
 
   const archives = useSelector((state: RootState) => state.archives)
   const archiveList = archives.filter(item => item.user_id === cookie["user_id"])
@@ -55,11 +60,16 @@ import type { RootState } from "../redux/store/store"
   },[])
 
   const LoadDetails = useCallback(()=>{
-    axios.get(`/appointments/${cookie["user_id"]}`)
+    axios.get("/appointments")
     .then(res=>{
       setDetails(res.data)
     })
-  },[])
+    .catch(error => {
+      if (isAxiosError(error) && error.response?.status === 401) {
+        void handleRemoveClick()
+      }
+    })
+  }, [handleRemoveClick])
 
   useEffect(()=>{
     if(cookie["user_id"]){

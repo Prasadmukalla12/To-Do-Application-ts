@@ -2,24 +2,17 @@ const database = require("../config/database.cjs")
 
 const users = database.collection("users")
 
-function findAll() {
-    return users.find({}).toArray()
-}
-
 function findById(id) {
     return users.findOne({ user_id: id })
 }
 
-function create(user) {
+async function create(user) {
+    await users.createIndex({ user_id: 1 }, { unique: true })
     return users.insertOne(user)
 }
 
-function update(id, user) {
-    return users.updateOne({ user_id: id }, { $set: user })
+function upgradePassword(user, password) {
+    return users.updateOne({ _id: user._id, password: user.password }, { $set: { password } })
 }
 
-function remove(id) {
-    return users.deleteOne({ user_id: id })
-}
-
-module.exports = { findAll, findById, create, update, remove }
+module.exports = { findById, create, upgradePassword }

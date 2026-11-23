@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes} from "react-router-dom";
 import "./styles/header.css"
 import { useCookies } from "react-cookie";
 import { lazy, Suspense } from "react";
+import { endSession } from "./api";
 
 const ToDoHome = lazy(()=>import ("./componants/to-do-home"))
 const UserRegister = lazy(()=>import ("./componants/user-register"))
@@ -13,9 +14,13 @@ export default function App() {
   
   const [,,removeCookie] = useCookies(["user_id"])
 
-  function handleRemoveClick(){
-    removeCookie("user_id")
-    window.location.href="/"
+  async function handleRemoveClick(){
+    try {
+      await endSession()
+    } finally {
+      removeCookie("user_id", { path: "/" })
+      window.location.href="/"
+    }
   }
 
   return (

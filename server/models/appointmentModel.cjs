@@ -2,12 +2,8 @@ const database = require("../config/database.cjs")
 
 const appointments = database.collection("appointments")
 
-function findAll() {
-    return appointments.find({}).toArray()
-}
-
-function findById(id) {
-    return appointments.findOne({ appointment_id: id })
+function findById(id, userId) {
+    return appointments.findOne({ appointment_id: id, user_id: userId })
 }
 
 function findByUserId(userId) {
@@ -19,11 +15,11 @@ function create(appointment) {
 }
 
 function update(id, appointment) {
-    return appointments.updateOne({ appointment_id: id }, { $set: appointment })
+    return appointments.updateOne({ appointment_id: id, user_id: appointment.user_id }, { $set: appointment })
 }
 
-function remove(id) {
-    return appointments.deleteOne({ appointment_id: id })
+function remove(id, userId) {
+    return appointments.deleteOne({ appointment_id: id, user_id: userId })
 }
 
-module.exports = { findAll, findById, findByUserId, create, update, remove }
+module.exports = { findById, findByUserId, create, update, remove }

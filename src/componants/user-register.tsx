@@ -1,24 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/login-form.css"
 import{useFormik} from "formik"
-import axios from "../api"
+import { isAxiosError } from "axios";
+import api from "../api"
 import * as yup from "yup"
 import type { UserContract } from "../contracts/user-contract";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 export default function UserRegister(){
 
     const navigate = useNavigate()
-    const [ExistUser,setExistUser] = useState([])
-
-    useEffect(()=>{
-        axios.get("/users")
-        .then(res=>{
-            console.log(res.data)
-            setExistUser(res.data)
-        })
-    },[])
+    const [registrationError, setRegistrationError] = useState("")
 
     const formik = useFormik({
         initialValues:{
@@ -27,24 +20,16 @@ export default function UserRegister(){
             password:"",
             email:""
         },
-        onSubmit:(user:UserContract)=>{
-            var result = {
-                user_id : user.user_id,
-                user_name:user.user_name,
-                password : user.password,
-                email:user.email
+        onSubmit: async (user: UserContract) => {
+            setRegistrationError("")
+            try {
+                await api.post("/add-user", user)
+                navigate("/")
+            } catch (error) {
+                setRegistrationError(isAxiosError(error) && error.response?.status === 409
+                    ? "User ID already exists"
+                    : "Unable to register. Please try again.")
             }
-
-            var userResult = ExistUser.find((val:any)=>val.user_id===user.user_id)
-             if(!userResult){
-                axios.post("/add-user",result)
-            .then(()=>{
-               alert("user added")
-               navigate("/")
-            })
-             }else{
-                alert("user_id Exist")
-             }
         },
         validationSchema:yup.object({
             user_id:yup.string().required("User ID required").min(4,"User ID is Too short").max(15,"User ID not be above 15 characters"),
@@ -96,7 +81,10 @@ export default function UserRegister(){
                 </div>
             </div>
             <div className="mt-3">
-                <button type="submit" className="btn btn-primary w-100"><label className="fw-bold">Register</label></button>
+                {registrationError && <p className="text-danger" role="alert">{registrationError}</p>}
+                <button type="submit" className="btn btn-primary w-100" disabled={formik.isSubmitting}>
+                    {formik.isSubmitting ? "Registering…" : "Register"}
+                </button>
             </div>
             <div className="text-center">
                 <Link to="/"><label className="fw-bold">Existing user</label></Link>
